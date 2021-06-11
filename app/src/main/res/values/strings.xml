@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Sensors Monitor</string>
+    <string name="sensors_found">Sensors Detected:</string>
+    <string name="save_preferences">Save Preferences</string>
+    <string name="sensor_name">Sensor Name</string>
+    <string name="sensor_vendor">Vendor</string>
+    <string name="sensor_type">Type</string>
+    <string name="sensor_power">Power</string>
+    <string name="sensor_minDelay">Min Delay</string>
+    <string name="sensor_info_stats">Infos / Stats</string>
+    <string name="sensor_version">Version</string>
+    <string name="sensor_maxrange">Max. Range</string>
+</resources>

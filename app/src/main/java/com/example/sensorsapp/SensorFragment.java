@@ -77,19 +77,19 @@ public class SensorFragment extends Fragment  {
         // Inflate the layout for this fragment
         View frameLayout =  inflater.inflate(R.layout.fragment_sensor, container, false);
 
-        TextView name = (TextView) frameLayout.findViewById(R.id.sensor_name_frag);
-        TextView vendor = (TextView) frameLayout.findViewById(R.id.sensor_vendor_frag);
-        TextView version = (TextView) frameLayout.findViewById(R.id.sensor_version_frag);
-        TextView type = (TextView) frameLayout.findViewById(R.id.sensor_type_frag);
-        TextView power = (TextView) frameLayout.findViewById(R.id.sensor_power_frag);
-        TextView maxRange = (TextView) frameLayout.findViewById(R.id.sensor_maxrange_frag);
+        TextView name = frameLayout.findViewById(R.id.sensor_name_frag);
+        TextView vendor = frameLayout.findViewById(R.id.sensor_vendor_frag);
+        TextView version = frameLayout.findViewById(R.id.sensor_version_frag);
+        TextView type = frameLayout.findViewById(R.id.sensor_type_frag);
+        TextView power = frameLayout.findViewById(R.id.sensor_power_frag);
+        TextView maxRange = frameLayout.findViewById(R.id.sensor_maxrange_frag);
 
-        diagramBars[0] = (DiagramView) frameLayout.findViewById(R.id.diagram_bar_1);
-        diagramBars[1] = (DiagramView) frameLayout.findViewById(R.id.diagram_bar_2);
-        diagramBars[2] = (DiagramView) frameLayout.findViewById(R.id.diagram_bar_3);
-        diagramBars[3] = (DiagramView) frameLayout.findViewById(R.id.diagram_bar_4);
+        diagramBars[0] = frameLayout.findViewById(R.id.diagram_bar_1);
+        diagramBars[1] = frameLayout.findViewById(R.id.diagram_bar_2);
+        diagramBars[2] = frameLayout.findViewById(R.id.diagram_bar_3);
+        diagramBars[3] = frameLayout.findViewById(R.id.diagram_bar_4);
 
-        sensorValues = (TextView) frameLayout.findViewById(R.id.sensor_values);
+        sensorValues = frameLayout.findViewById(R.id.sensor_values);
 
         name.setText("Name: " + sensor.getName());
         vendor.setText("Vendor: " + sensor.getVendor());

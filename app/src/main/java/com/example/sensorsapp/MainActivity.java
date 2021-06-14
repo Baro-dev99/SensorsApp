@@ -1,5 +1,6 @@
 package com.example.sensorsapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,12 +36,13 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private ViewPager viewPager;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("MyLog", "Main Activity : onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = findViewById(R.id.view_pager);
 
         // get all-type device sensors
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -52,6 +55,20 @@ public class MainActivity extends AppCompatActivity {
             // no selected sensors -> select some in sensor settings activity
             startActivity(new Intent(this, SensorSettingsActivity.class));
         }
+
+        // add a sensor's data in sp to display in a widget
+        Sensor sensor = deviceSensors.get(2); // e.g. orientation
+        StringBuilder builder = new StringBuilder();
+        builder.append(sensor.getName()).append("///");
+        builder.append(sensor.getVendor()).append("///");
+        builder.append(sensor.getVersion()).append("///");
+        builder.append(sensor.getStringType().substring(15)).append("///");
+        builder.append(sensor.getPower()).append("///");
+        builder.append(sensor.getMaximumRange());
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("widget_info", builder.toString());
+        editor.apply();
     }
 
     @Override

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SensorMonitorCustView">
-        <attr name="static_bar_color" format="color"/>
-        <attr name="dynamic_bar_color" format="color"/>
+        <attr name="static_bar_color" format="color" />
+        <attr name="dynamic_bar_color" format="color" />
     </declare-styleable>
 
     <declare-styleable name="DiagramView">
-        <attr name="color" format="color"/>
+        <attr name="color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="AppWidgetAttrs">
+        <attr name="appWidgetBackgroundColor" format="color" />
+        <attr name="appWidgetTextColor" format="color" />
     </declare-styleable>
 </resources>

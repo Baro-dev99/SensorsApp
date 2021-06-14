@@ -10,4 +10,6 @@
     <string name="sensor_info_stats">Infos / Stats</string>
     <string name="sensor_version">Version</string>
     <string name="sensor_maxrange">Max. Range</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

@@ -19,6 +19,10 @@ import java.util.List;
 public class WorkerThread extends Thread implements SensorEventListener {
     private Handler handler;
     private Sensor sensor;
+    private StringBuilder sensorValuesStr = new StringBuilder();;
+    private Message message;
+    private Bundle bundle = new Bundle();;
+    int counter = 0;
 
     public WorkerThread(Handler handler, Sensor sensor) {
         this.handler = handler;
@@ -34,24 +38,24 @@ public class WorkerThread extends Thread implements SensorEventListener {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float[] values = event.values;
-        StringBuilder sensorValuesStr = new StringBuilder();
+        sensorValuesStr.setLength(0);
+        message = new Message();
+        bundle.clear();
+        counter++;
 
-        Message message = new Message();
-        Bundle bundle = new Bundle();
-
-        for (int i = 0; i < values.length; i++)
-            sensorValuesStr.append(System.lineSeparator()).append(values[i]);
+        for (int i = 0; i < event.values.length; i++)
+            sensorValuesStr.append(System.lineSeparator()).append(event.values[i]);
+        sensorValuesStr.append(System.lineSeparator()).append("Method call: " + counter);
         bundle.putString("sensorValues", sensorValuesStr.toString());
 
-        int size = values.length;
+        int size = event.values.length;
         if(size > 4) size = 4;
 
         bundle.putString("diagramSize", String.valueOf(size));
         bundle.putString("maxRange", String.valueOf(event.sensor.getMaximumRange()));
 
         for(int i = 0; i < size; i++)
-            bundle.putString("diagramBar" + i, String.valueOf(values[i]));
+            bundle.putString("diagramBar" + i, String.valueOf(event.values[i]));
 
         message.setData(bundle);
         handler.sendMessage(message);

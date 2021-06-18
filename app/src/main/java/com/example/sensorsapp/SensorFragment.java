@@ -114,7 +114,7 @@ public class SensorFragment extends Fragment  {
     public void onStop() {
         super.onStop();
         Log.d("MyLog", "SensorFragment : " + sensor.getName() + ": onStop()");
-//        MainActivity.sensorManager.unregisterListener(this);
+        MainActivity.sensorManager.unregisterListener(thread);
         thread.interrupt();
     }
 

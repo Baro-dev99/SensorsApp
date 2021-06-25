@@ -19,13 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class SensorFragment extends Fragment  {
+public class SensorFragment extends Fragment implements SensorEventListener {
     private Sensor sensor;
     private TextView sensorValues;
     private DiagramView diagramBars[] = new DiagramView[4];
 
     private Handler handler;
-    private WorkerThread thread;
+    private WorkerThread2 thread;
+
+    private int counter = 0;
 
     public SensorFragment() {
         // Required empty public constructor
@@ -49,12 +51,18 @@ public class SensorFragment extends Fragment  {
                 sensorValues.setText("Sensor Values:" + str);
 
                 int size = Integer.parseInt(msg.getData().getString("diagramSize"));
+                int workerID = Integer.parseInt(msg.getData().getString("workerID"));
+                String workerName = msg.getData().getString("workerName");
                 float maxRange = Float.parseFloat(msg.getData().getString("maxRange"));
 
                 for (int i = 0; i < size; i++) {
                     float value = Float.parseFloat(msg.getData().getString("diagramBar" + i));
                     diagramBars[i].setSensorValue((value * DiagramView.BAR_LENGTH / 2) / maxRange);
                 }
+
+                Log.d("MyLog", "SensorFragment (handler) - ["
+                        + Thread.currentThread().getName() + ":" + Thread.currentThread().getId()
+                        + "] -> Received data from [" + workerName + ":" + workerID + "] -> Views Updated");
             }
         };
 
@@ -66,9 +74,9 @@ public class SensorFragment extends Fragment  {
     public void onResume() {
         super.onResume();
         Log.d("MyLog", "SensorFragment : " + sensor.getName() + ": onResume()");
-//        MainActivity.sensorManager.registerListener(this,sensor, SensorManager.SENSOR_DELAY_UI);
-        thread = new WorkerThread(handler, sensor);
-        thread.start();
+        MainActivity.sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+//        thread = new WorkerThread(handler, sensor);
+//        thread.start();
     }
 
     @Override
@@ -114,14 +122,22 @@ public class SensorFragment extends Fragment  {
     public void onStop() {
         super.onStop();
         Log.d("MyLog", "SensorFragment : " + sensor.getName() + ": onStop()");
-        MainActivity.sensorManager.unregisterListener(thread);
-        thread.interrupt();
+        MainActivity.sensorManager.unregisterListener(this);
+//        MainActivity.sensorManager.unregisterListener(thread);
+//        thread.interrupt();
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//    @Override
-//    public void onSensorChanged(SensorEvent event) {
-//        float[] values = event.values;
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        // to prevent the UI thread from creating a huge number of Worker Threads.
+        if(counter % 50 == 0) {
+            WorkerThread2 thread = new WorkerThread2(handler, event.values, event.sensor.getMaximumRange());
+            thread.start();
+        }
+        counter ++;
+
+
 //        StringBuilder sensorValuesStr = new StringBuilder();
 //
 //        for (int i = 0; i < values.length; i++)
@@ -132,10 +148,10 @@ public class SensorFragment extends Fragment  {
 //        if(size > 4) size = 4;
 //        for(int i = 0; i < size; i++)
 //            diagramBars[i].setSensorValue((values[i] * DiagramView.BAR_LENGTH / 2) / event.sensor.getMaximumRange());
-//    }
-//
-//    @Override
-//    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-//
-//    }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
 }

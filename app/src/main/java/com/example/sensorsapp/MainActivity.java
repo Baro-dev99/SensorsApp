@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Sensor> selectedSensorsList = new ArrayList<>();
     private SensorViewPagerAdapter sensorViewPagerAdapter;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private ViewPager viewPager;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
@@ -56,18 +57,28 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, SensorSettingsActivity.class));
         }
 
-        // add a sensor's data in sp to display in a widget
-        Sensor sensor = deviceSensors.get(2); // e.g. orientation
-        StringBuilder builder = new StringBuilder();
-        builder.append(sensor.getName()).append("///");
-        builder.append(sensor.getVendor()).append("///");
-        builder.append(sensor.getVersion()).append("///");
-        builder.append(sensor.getStringType().substring(15)).append("///");
-        builder.append(sensor.getPower()).append("///");
-        builder.append(sensor.getMaximumRange());
+        editor = sharedPreferences.edit();
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("widget_info", builder.toString());
+        // add all sensors info into a shared preference
+        if(sharedPreferences.getString("all_sensors_info", null) == null) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < deviceSensors.size(); i++) {
+                Sensor sensor = deviceSensors.get(i);
+                builder.append(sensor.getName()).append("///");
+                builder.append(sensor.getVendor()).append("///");
+                builder.append(sensor.getVersion()).append("///");
+                builder.append(sensor.getStringType().substring(15)).append("///");
+                builder.append(sensor.getPower()).append("///");
+                builder.append(sensor.getMaximumRange()).append(">>>");
+            }
+            editor.putString("all_sensors_info", builder.toString());
+        }
+
+        if(sharedPreferences.getString("widget_index", null) == null) {
+            // will be incremented to 0 when the widget is created
+            editor.putString("widget_index", "-1");
+        }
+
         editor.apply();
     }
 

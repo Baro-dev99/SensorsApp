@@ -12,9 +12,6 @@ public class WorkerThread extends Thread{
     private Handler handler;
     private float[] sensorValues;
     private float maximumRange;
-    private StringBuilder sensorValuesStr = new StringBuilder();
-    private Message message;
-    private Bundle bundle = new Bundle();
 
     public WorkerThread(Handler handler, float[] sensorValues, float maximumRange) {
         this.handler = handler;
@@ -27,12 +24,12 @@ public class WorkerThread extends Thread{
     public void run() {
         super.run();
 
-        sensorValuesStr.setLength(0);
-        message = new Message();
-        bundle.clear();
+        StringBuilder sensorValuesStr = new StringBuilder();
+        Message message = new Message();;
+        Bundle bundle = new Bundle();
 
-        for (int i = 0; i < sensorValues.length; i++)
-            sensorValuesStr.append(System.lineSeparator()).append(sensorValues[i]);
+        for (float sensorValue : sensorValues)
+            sensorValuesStr.append(System.lineSeparator()).append(sensorValue);
         bundle.putString("sensorValues", sensorValuesStr.toString());
 
         int size = sensorValues.length;

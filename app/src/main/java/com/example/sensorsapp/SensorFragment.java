@@ -25,8 +25,6 @@ public class SensorFragment extends Fragment implements SensorEventListener {
     private DiagramView diagramBars[] = new DiagramView[4];
 
     private Handler handler;
-    private WorkerThread thread;
-
     private int counter = 0;
 
     public SensorFragment() {
@@ -43,7 +41,6 @@ public class SensorFragment extends Fragment implements SensorEventListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        MainActivity.sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -65,9 +62,6 @@ public class SensorFragment extends Fragment implements SensorEventListener {
                         + "] -> Received data from [" + workerName + ":" + workerID + "] -> Views Updated");
             }
         };
-
-//        thread = new WorkerThread(handler, sensor);
-//        thread.start();
     }
 
     @Override
@@ -75,8 +69,6 @@ public class SensorFragment extends Fragment implements SensorEventListener {
         super.onResume();
         Log.d("MyLog", "SensorFragment : " + sensor.getName() + ": onResume()");
         MainActivity.sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
-//        thread = new WorkerThread(handler, sensor);
-//        thread.start();
     }
 
     @Override
@@ -123,8 +115,6 @@ public class SensorFragment extends Fragment implements SensorEventListener {
         super.onStop();
         Log.d("MyLog", "SensorFragment : " + sensor.getName() + ": onStop()");
         MainActivity.sensorManager.unregisterListener(this);
-//        MainActivity.sensorManager.unregisterListener(thread);
-//        thread.interrupt();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -136,18 +126,6 @@ public class SensorFragment extends Fragment implements SensorEventListener {
             thread.start();
         }
         counter ++;
-
-
-//        StringBuilder sensorValuesStr = new StringBuilder();
-//
-//        for (int i = 0; i < values.length; i++)
-//            sensorValuesStr.append(System.lineSeparator()).append(values[i]);
-//        sensorValues.setText("Sensor Values:" + sensorValuesStr.toString());
-//
-//        int size = values.length;
-//        if(size > 4) size = 4;
-//        for(int i = 0; i < size; i++)
-//            diagramBars[i].setSensorValue((values[i] * DiagramView.BAR_LENGTH / 2) / event.sensor.getMaximumRange());
     }
 
     @Override

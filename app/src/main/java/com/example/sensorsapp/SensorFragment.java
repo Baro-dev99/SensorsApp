@@ -25,7 +25,7 @@ public class SensorFragment extends Fragment implements SensorEventListener {
     private DiagramView diagramBars[] = new DiagramView[4];
 
     private Handler handler;
-    private WorkerThread2 thread;
+    private WorkerThread thread;
 
     private int counter = 0;
 
@@ -132,7 +132,7 @@ public class SensorFragment extends Fragment implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         // to prevent the UI thread from creating a huge number of Worker Threads.
         if(counter % 50 == 0) {
-            WorkerThread2 thread = new WorkerThread2(handler, event.values, event.sensor.getMaximumRange());
+            WorkerThread thread = new WorkerThread(handler, event.values, event.sensor.getMaximumRange());
             thread.start();
         }
         counter ++;

@@ -121,7 +121,7 @@ public class SensorFragment extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         // to prevent the UI thread from creating a huge number of Worker Threads.
-        if(counter % 50 == 0) {
+        if(counter % 10 == 0) {
             WorkerThread thread = new WorkerThread(handler, event.values, event.sensor.getMaximumRange());
             thread.start();
         }

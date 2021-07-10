@@ -10,7 +10,7 @@ import android.view.View;
 public class DiagramView extends View {
     public static final float BAR_LENGTH = 500;
 
-    private Paint paint;
+    private final Paint paint;
     private float sensorValue = 0;
 
     public DiagramView(Context context, AttributeSet attrs) {
@@ -22,9 +22,9 @@ public class DiagramView extends View {
         paint.setColor(color);
     }
 
-    public float getSensorValue() {
-        return sensorValue;
-    }
+//    public float getSensorValue() {
+//        return sensorValue;
+//    }
 
     public void setSensorValue(float sensorValue) {
         this.sensorValue = sensorValue;

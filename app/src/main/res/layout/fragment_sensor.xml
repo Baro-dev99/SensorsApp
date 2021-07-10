@@ -6,26 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SensorFragment">
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical" >-->
-<!---->
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Information:"-->
-<!--            android:textColor="@color/purple_500"-->
-<!--            android:textSize="30dp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:fontFamily="serif"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:layout_marginRight="10dp"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            android:layout_marginTop="30dp"/>-->
-<!---->
-<!--    </LinearLayout>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="@string/sensor_name"
             android:textColor="@color/white"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/sensor_vendor_frag"
@@ -50,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/sensor_vendor"
             android:textColor="@color/white"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/sensor_version_frag"
@@ -58,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/sensor_version"
             android:textColor="@color/white"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/sensor_type_frag"
@@ -66,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="@string/sensor_type"
             android:textColor="@color/white"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/sensor_power_frag"
@@ -74,7 +54,7 @@
             android:layout_height="wrap_content"
             android:text="@string/sensor_power"
             android:textColor="@color/white"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/sensor_maxrange_frag"
@@ -82,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="@string/sensor_maxrange"
             android:textColor="@color/white"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -94,7 +74,6 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
-
 
         <com.example.sensorsapp.DiagramView
             android:id="@+id/diagram_bar_1"
@@ -120,7 +99,6 @@
             android:layout_height="match_parent"
             app:color="@android:color/holo_blue_light" />
 
-
         <TextView
             android:id="@+id/sensor_values"
             android:layout_width="wrap_content"
@@ -130,9 +108,6 @@
             android:text="Sensor Values:"
             android:textColor="@color/purple_700" />
 
-
-
     </LinearLayout>
-
 
 </FrameLayout>

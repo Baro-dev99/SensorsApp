@@ -1,9 +1,5 @@
 package com.example.sensorsapp;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,27 +10,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
     public static String SP_NAME = "my_preferences";
     public static SensorManager sensorManager;
     public static List<Sensor> deviceSensors;
 
-    private List<Sensor> selectedSensorsList = new ArrayList<>();
+    private final List<Sensor> selectedSensorsList = new ArrayList<>();
     private SensorViewPagerAdapter sensorViewPagerAdapter;
     private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     private ViewPager viewPager;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
@@ -57,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, SensorSettingsActivity.class));
         }
 
-        editor = sharedPreferences.edit();
 
-        // add all sensors info into a shared preference
+        // add all sensors info into a shared preference to be used by the widget
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         if(sharedPreferences.getString("all_sensors_info", null) == null) {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < deviceSensors.size(); i++) {
@@ -95,12 +86,15 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < selectedSensors.length; i++)
                 selectedSensorsList.add(i, deviceSensors.get(Integer.parseInt(selectedSensors[i])));
 
-//            ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
             if(sensorViewPagerAdapter == null) {
                 sensorViewPagerAdapter = new SensorViewPagerAdapter(getSupportFragmentManager(), 0, selectedSensorsList);
                 viewPager.setAdapter(sensorViewPagerAdapter);
             }
             sensorViewPagerAdapter.notifyDataSetChanged();
+        }
+        else {
+            // no selected sensors -> select some in sensor settings activity
+            startActivity(new Intent(this, SensorSettingsActivity.class));
         }
     }
 

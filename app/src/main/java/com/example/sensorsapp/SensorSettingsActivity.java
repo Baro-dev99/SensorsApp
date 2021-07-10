@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SensorSettingsActivity extends AppCompatActivity {
-    private List<MySensor> mySensorList = new ArrayList<>();
+    private final List<MySensor> mySensorList = new ArrayList<>();
     private SensorAdapter sensorAdapter;
     private SharedPreferences sharedPreferences;
 
@@ -64,7 +64,7 @@ public class SensorSettingsActivity extends AppCompatActivity {
         // saving selected sensors indexes in a shared preference string
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < mySensorList.size(); i++)
-            if (mySensorList.get(i).isSelected() == true)
+            if (mySensorList.get(i).isSelected())
                 str.append(i).append(",");
 
         if (str.length() != 0) {
@@ -80,7 +80,7 @@ public class SensorSettingsActivity extends AppCompatActivity {
 
     public void checkboxClick(View view) {
         int position = (Integer) view.getTag();
-        if (mySensorList.get(position).isSelected() == false)
+        if (!mySensorList.get(position).isSelected())
             mySensorList.get(position).setSelected(true);
         else
             mySensorList.get(position).setSelected(false);
